@@ -27,7 +27,7 @@ class Mask:
         return masked
 
     def return_mask(self,masked):
-        filepath=r"C:\Users\kuranosuke\Desktop\folders\Programs\physics\cansat2026\img,data"
+        filepath=r"C:\Users\kuranosuke\Desktop\folders\Programs\physics\Cansat2026\img,data"
         filename=datetime.now().strftime("results_%Y%m%d_%H%M%S_%f.jpg")
         savepath=os.path.join(filepath,filename)
         cv2.imwrite(savepath,masked)

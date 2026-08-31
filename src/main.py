@@ -1,19 +1,12 @@
-class main:
-    def __init__(self,main,log,gps,camera,moter,opencv,start):
-        self.main=main
-        self.log=log
-        self.gps=gps
-        self.camera=camera
-        self.moter=moter
-        self.cv=opencv
-        self.start=start
+from camera import camera
+from Pmethod import Mask
+from picture_method import imgpath,process,result
+from gps import get_position
 
+def main():
+    imge_file=camera()
+    latitude,longitude=get_position()
+    result=process(Mask(imgpath))
 
-import logging
-logger=logging.getLogger(__name__)
-logger.setlevel(logging.INFO)
-
-def main_log_func():
-    logging.info("camera logging settings error")
-    logging.error("camera filese logging settings error")
-    
+if __name__=="__main__":
+    main()

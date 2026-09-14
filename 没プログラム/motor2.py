@@ -1,34 +1,27 @@
 """
 oshirukko
 """
-
 import RPi.GPIO as GPIO
 import time
 
 L_DIR = 19
 R_DIR = 13
+
 PWM_L = 26
 PWM_R = 6
 
-pwm_l=None
-pwm_r=None
+GPIO.setmode(GPIO.BCM)
 
+GPIO.setup(L_DIR, GPIO.OUT)
+GPIO.setup(R_DIR, GPIO.OUT)
+GPIO.setup(PWM_L, GPIO.OUT)
+GPIO.setup(PWM_R, GPIO.OUT)
 
-def setup():
-    global pwm_l, pwm_r
+pwm_l = GPIO.PWM(PWM_L, 1000)
+pwm_r = GPIO.PWM(PWM_R, 1000)
 
-    GPIO.setmode(GPIO.BCM)
-
-    GPIO.setup(L_DIR, GPIO.OUT)
-    GPIO.setup(R_DIR, GPIO.OUT)
-    GPIO.setup(PWM_L, GPIO.OUT)
-    GPIO.setup(PWM_R, GPIO.OUT)
-
-    pwm_l = GPIO.PWM(PWM_L, 1000)
-    pwm_r = GPIO.PWM(PWM_R, 1000)
-
-    pwm_l.start(0)
-    pwm_r.start(0)
+pwm_l.start(0)
+pwm_r.start(0)
 
 def move(duty: int, direction: str) -> None:
  duty = int(duty)
@@ -37,7 +30,7 @@ def move(duty: int, direction: str) -> None:
      GPIO.output(L_DIR, 1)
      GPIO.output(R_DIR, 1)
      pwm_l.ChangeDutyCycle(duty)
-     pwm_r.ChangeDutyCycle(duty * 0.8)
+     pwm_r.ChangeDutyCycle(duty)
  elif direction ==  "l":
      GPIO.output(L_DIR, 1)
      GPIO.output(R_DIR, 1)
@@ -52,8 +45,7 @@ def move(duty: int, direction: str) -> None:
      pwm_l.ChangeDutyCycle(0)
      pwm_r.ChangeDutyCycle(0)
 
-def main():
-    setup()
+if __name__ == "__main__":
     try:
         while True:
             duty, direction = input("duty,dir = ").split(",")
@@ -64,6 +56,3 @@ def main():
 
     finally:
         GPIO.cleanup()
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,7 @@
 import camera
 import gps
 import main
-import moter
+import 没プログラム.moter as moter
 import opencv
 import start
 
